@@ -36,13 +36,46 @@ namespace TravelApi.Controllers
       return place;
     }
 
-    // POST api/places
+    // POST api/Places
     [HttpPost]
     public async Task<ActionResult<Place>> Post(Place place)
     {
       _db.Places.Add(place);
       await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetPlace), new { id = place.PlaceId }, place);
+    }
+
+    // PUT api/Places/3
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Place place)
+    {
+      if (id != place.PlaceId)
+      {
+        return BadRequest();
+      }
+      _db.Places.Update(place);
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!PlaceExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+      return NoContent();
+    }
+
+    private bool PlaceExists(int id)
+    {
+      return _db.Places.Any(entry => entry.PlaceId == id);
     }
   }
 }
