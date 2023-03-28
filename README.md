@@ -4,10 +4,10 @@
 
 #### Build an API that allows users to `GET` and `POST` reviews about various travel destinations around the world.
 
-* As a user, I want to GET and POST reviews about travel destinations.
-* As a user, I want to GET reviews by country or city.
+* As a user, I want to `GET` and `POST` reviews about travel destinations.
+* As a user, I want to `GET` reviews by country or city.
 * As a user, I want to see the most popular travel destinations by number of reviews or by overall rating.
-* As a user, I want to PUT and DELETE reviews, but only if I wrote them. (Start by requiring a user_name param to match the user_name of the author on the message. You can always try authentication later.)
+* As a user, I want to `PUT` and `DELETE` reviews, but only if I wrote them. (Start by requiring a user_name param to match the user_name of the author on the message. You can always try authentication later.)
 * As a user, I want to look up random destinations just for fun.
 
 ## Technologies Used
@@ -94,3 +94,16 @@ When making a PUT request to `http://localhost:5000/api/places/{id}`, you need t
 And here's the PUT request we would send the body to:
 
 `http://localhost:5000/api/places/1` -->
+
+### Stretch Plans
+
+* Add `PATCH` functionality
+* Add user verification
+* Add query strings
+* Add model validation
+
+> **FURTHER EXPLORATION TOPICS:**
+> * Token-Based Authentication
+> * API Versioning
+> * Pagination
+> * Enable CORS
