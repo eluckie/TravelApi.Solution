@@ -35,5 +35,14 @@ namespace TravelApi.Controllers
 
       return place;
     }
+
+    // POST api/places
+    [HttpPost]
+    public async Task<ActionResult<Place>> Post(Place place)
+    {
+      _db.Places.Add(place);
+      await _db.SaveChangesAsync();
+      return CreatedAtAction(nameof(GetPlace), new { id = place.PlaceId }, place);
+    }
   }
 }
