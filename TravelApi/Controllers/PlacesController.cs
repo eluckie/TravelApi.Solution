@@ -77,5 +77,20 @@ namespace TravelApi.Controllers
     {
       return _db.Places.Any(entry => entry.PlaceId == id);
     }
+
+    // DELETE api/Places/3
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePlace(int id)
+    {
+      Place place = await _db.Places.FindAsync(id);
+      if (place == null)
+      {
+        return NotFound();
+      }
+      _db.Places.Remove(place);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
+    }
   }
 }
