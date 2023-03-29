@@ -4,8 +4,6 @@
 
 #### Build an API that allows users to `GET` and `POST` reviews about various travel destinations around the world.
 
-* As a user, I want to `PUT` and `DELETE` reviews, but only if I wrote them. (Start by requiring a user_name param to match the user_name of the author on the message. You can always try authentication later.)
-
 ## Technologies Used
 
 * C#
@@ -139,8 +137,8 @@ _**NOTE:** the id number in the request URL must match the `placeId` for the pla
 ### Stretch Plans
 
 * Add `PATCH` functionality
-* Add user verification
-* Add model validation
+* Add user authentication with Identity
+* As a user, I want to `DELETE` reviews, but only if I wrote them.
 
 **FURTHER EXPLORATION TOPICS:**
 > * Token-Based Authentication

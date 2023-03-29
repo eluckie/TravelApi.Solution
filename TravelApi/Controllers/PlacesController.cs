@@ -85,6 +85,12 @@ namespace TravelApi.Controllers
       {
         return BadRequest();
       }
+
+      if (!UserCheck(place.User_Name, id))
+      {
+        return Unauthorized();
+      }
+
       _db.Places.Update(place);
 
       try
@@ -110,6 +116,11 @@ namespace TravelApi.Controllers
       return _db.Places.Any(entry => entry.PlaceId == id);
     }
 
+    private bool UserCheck(string user_Name, int id)
+    {
+      return _db.Places.Any(entry => entry.PlaceId == id && entry.User_Name == user_Name);
+    }
+
     // DELETE api/Places/3
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlace(int id)
@@ -119,6 +130,7 @@ namespace TravelApi.Controllers
       {
         return NotFound();
       }
+
       _db.Places.Remove(place);
       await _db.SaveChangesAsync();
 
