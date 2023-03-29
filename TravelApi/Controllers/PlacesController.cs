@@ -17,7 +17,7 @@ namespace TravelApi.Controllers
 
     // GET api/Places
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Place>>> Get(int rating, int minimumRating, bool rec)
+    public async Task<ActionResult<IEnumerable<Place>>> Get(int rating, int minimumRating, bool rec, string city, string state, string country)
     {
       IQueryable<Place> query = _db.Places.AsQueryable();
 
@@ -34,6 +34,21 @@ namespace TravelApi.Controllers
       if (rec)
       {
         query = query.Where(entry => entry.Rating >= 4);
+      }
+
+      if (city != null)
+      {
+        query = query.Where(entry => entry.City == city);
+      }
+
+      if (state != null)
+      {
+        query = query.Where(entry => entry.State == state);
+      }
+
+      if (country != null)
+      {
+        query = query.Where(entry => entry.Country == country);
       }
 
       return await query.ToListAsync();
