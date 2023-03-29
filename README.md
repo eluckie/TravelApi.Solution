@@ -4,11 +4,7 @@
 
 #### Build an API that allows users to `GET` and `POST` reviews about various travel destinations around the world.
 
-* As a user, I want to `GET` and `POST` reviews about travel destinations.
-* As a user, I want to `GET` reviews by country or city.
-* As a user, I want to see the most popular travel destinations by number of reviews or by overall rating.
 * As a user, I want to `PUT` and `DELETE` reviews, but only if I wrote them. (Start by requiring a user_name param to match the user_name of the author on the message. You can always try authentication later.)
-* As a user, I want to look up random destinations just for fun.
 
 ## Technologies Used
 
@@ -16,6 +12,8 @@
 * .NET 7.0
 * API
 * Postman
+* MySQL Workbench
+* Swagger
 * Markdown
 * Git
 
@@ -38,71 +36,104 @@
 
 ### Endpoints
 
+```
 GET http://localhost:5000/api/places/
-
 GET http://localhost:5000/api/places/{id}
-
 POST http://localhost:5000/api/places/
-
 PUT http://localhost:5000/api/places/{id}
-
 DELETE http://localhost:5000/api/places/{id}
+```
 
 ### Optional Parameters
+| Parameter | Type | Required | Description |
+| --------- | ---- | -------- | ----------- |
+| rating | number | no | returns all places with a matching rating |
+| minimumRating | number | no | returns all places with a rating matching or greater than the specified value |
+| rec | boolean (true) | no | returns all "recommended" places (with a rating of 4-5) |
+| city | string | no | returns all places with a matching city name | 
+| state | string | no | returns all places with a matching state name |
+| country | string | no | returns all places with a matching country name |
 
 
 #### Example Queries
-<!-- * The following query will return all places with a species value of "Dinosaur":
-```GET http://localhost:5000/api/places?species=dinosaur```
+* The following query will return all places with a rating value of 3:
 
-* The following query will return all places with the name "Matilda":
-```GET http://localhost:5000/api/places?name=matilda```
+```GET http://localhost:5000/api/places?rating=3```
 
-* The following query will return all places with an age of 10 or older:
-```GET http://localhost:5000/api/places?minimumAge=10```
+* The following query will return all places with a minimum rating of 2:
+
+```GET http://localhost:5000/api/places?minimumRating=2```
+
+* The following query will return all places with a rating of 4-5:
+
+```GET http://localhost:5000/api/places?rec=true``
+
+* The following query will return all places labeled "Cleveland"
+
+``` GET http://localhost:5000/api/places?city=Cleveland```
+
+* The following query will return all places in "California"
+
+``` GET http://localhost:5000/api/places?state=California```
+
+* The following query will return all places in the "USA"
+
+``` GET http://localhost:5000/api/places?country=USA```
 
 * It's possible to include multiple query strings by separating them with an `&`:
-```GET http://localhost:5000/api/places?species=dinosaur&minimumAge=10``` -->
+
+```GET http://localhost:5000/api/places?city=San Francisco&rec=true```
 
 
 ### Additional Requirements
 
-<!-- #### for POST request -->
+#### for POST request
 
-<!-- When making a POST request to `http://localhost:5000/api/places/`, you need to include a **body**. Here's an example body in JSON:
+When making a POST request to `http://localhost:5000/api/places/`, you need to include a **body**. Here's an example body in JSON:
+
+_**NOTE:** State & SeasonVisited are not required properties. All the rest are_
 
 ```json
 {
-  "species": "Tyrannosaurus Rex",
-  "name": "Elizabeth",
-  "age": 8
+    "city": "Paris",
+    "state": "",
+    "country": "France",
+    "seasonVisited": "autumn",
+    "rating": 4,
+    "review": "Beautiful lights, would love to visit.",
+    "user_Name": "Luckie"
 }
 ```
 
 #### for PUT request
-When making a PUT request to `http://localhost:5000/api/places/{id}`, you need to include a body that includes the animal's `animalId` property. Here's an example body in JSON:
+When making a PUT request to `http://localhost:5000/api/places/{id}`, you need to include a body that includes the animal's `placeId` property. Here's an example body in JSON:
 
 ```json
 {
-  "animalId": 1,
-  "species": "Tyrannosaurus Rex",
-  "name": "Lizzy",
-  "age": 9
+    "placeId": 7,
+    "city": "Paris",
+    "state": "",
+    "country": "France",
+    "seasonVisited": "fall",
+    "rating": 4,
+    "review": "Beautiful lights, would love to visit.",
+    "user_Name": "Luckie"
 }
 ```
 
-And here's the PUT request we would send the body to:
+And here's the request we would send the body to:
 
-`http://localhost:5000/api/places/1` -->
+`PUT http://localhost:5000/api/places/7`
+
+_**NOTE:** the id number in the request URL must match the `placeId` for the place you'd like to update_
 
 ### Stretch Plans
 
 * Add `PATCH` functionality
 * Add user verification
-* Add query strings
 * Add model validation
 
-> **FURTHER EXPLORATION TOPICS:**
+**FURTHER EXPLORATION TOPICS:**
 > * Token-Based Authentication
 > * API Versioning
 > * Pagination
