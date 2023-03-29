@@ -17,9 +17,16 @@ namespace TravelApi.Controllers
 
     // GET api/Places
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Place>>> Get()
+    public async Task<ActionResult<IEnumerable<Place>>> Get(int rating)
     {
-      return await _db.Places.ToListAsync();
+      IQueryable<Place> query = _db.Places.AsQueryable();
+
+      if (rating != 0)
+      {
+        query = query.Where(entry => entry.Rating == rating);
+      }
+
+      return await query.ToListAsync();
     }
 
     // GET api/Places/3
